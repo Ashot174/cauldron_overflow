@@ -29,9 +29,9 @@ class ExceptionListener
         //$notification = new SlackNotification('Hello, Slack!');
         $this->sentryHub->captureException($exception);
 
-        $this->httpClient->request('POST', 'https://hooks.slack.com/services/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', [
-            'json' => ['text' => "<https://my-org-w2.sentry.io/issues/?project=4503980797984768|{$exception->getMessage()}>"],
-        ]);
+//        $this->httpClient->request('POST', 'https://hooks.slack.com/services/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', [
+//            'json' => ['text' => "<https://my-org-w2.sentry.io/issues/?project=4503980797984768|{$exception->getMessage()}>"],
+//        ]);
 
     }
 }
