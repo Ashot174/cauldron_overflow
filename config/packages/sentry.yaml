@@ -1,0 +1,30 @@
+when@dev:
+    sentry:
+        dsn: '%env(SENTRY_DSN)%'
+
+#        If you are using Monolog, you also need these additional configuration and services to log the errors correctly:
+#        https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
+#        register_error_listener: false
+        options:
+            http_proxy: 'https://sentry.yerevan.am:443'
+
+    monolog:
+        handlers:
+            sentry:
+                type: service
+                id: Sentry\Monolog\Handler
+                fill_extra_context: true
+
+    services:
+        Sentry\Monolog\Handler:
+            arguments:
+                $hub: '@Sentry\State\HubInterface'
+                $level: !php/const Monolog\Logger::ERROR
+                $bubble: false
+
+when@prod:
+    sentry:
+        dsn: '%env(SENTRY_DSN)%'
+        options:
+            # Specify a fixed sample rate
+            traces_sample_rate: 1.0
